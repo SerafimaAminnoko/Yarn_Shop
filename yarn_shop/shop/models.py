@@ -1,70 +1,75 @@
 from django.db import models
 
 # Create your models here.
-
-
-class Category(models.Model):
-    category = models.CharField(max_length=30)
-    url = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.category
-
-    class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
-
-
-class Color(models.Model):
-    color = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.color
-
-    class Meta:
-        verbose_name = 'Color'
-        verbose_name_plural = 'Colors'
+from django.urls import reverse
 
 
 class Producer(models.Model):
-    producer = models.CharField(max_length=200)
+    prod = models.CharField(max_length=200, verbose_name='Producer')
 
     def __str__(self):
-        return self.producer
+        return self.prod
 
     class Meta:
         verbose_name = 'Producer'
         verbose_name_plural = 'Producers'
 
 
-class Yarn(models.Model):
-    name = models.CharField(max_length=50)
-    url = models.SlugField(unique=True)
-    description = models.TextField()
-    image = models.ImageField(upload_to='shop/')
-    price = models.SmallIntegerField()
-    length = models.SmallIntegerField()
-    weight = models.SmallIntegerField()
-    needles = models.CharField(max_length=50)
-    hook = models.CharField(max_length=50)
-    producer = models.ForeignKey(Producer, on_delete=models.PROTECT, related_name='producer_name')
-    color = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='color_name')
-    yarn_add = models.DateTimeField(auto_now=True)
-    yarn_update = models.DateTimeField(auto_now_add=True)
-    availability = models.BooleanField(default=False)
+class Country(models.Model):
+    count = models.CharField(max_length=12, verbose_name='Color')
+
+    def __str__(self):
+        return self.count
+
+    class Meta:
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries'
+
+
+class Category(models.Model):
+    cat = models.CharField(max_length=30, verbose_name='Color')
+    url = models.SlugField(unique=True, verbose_name='Url')
+
+    def __str__(self):
+        return self.cat
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'slug': self.url})
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=40, verbose_name='Name')
+    url = models.SlugField(unique=True, verbose_name='Url')
+    description = models.TextField(verbose_name='Description')
+    image = models.ImageField(upload_to='subcategory/', blank=True, verbose_name='Image')
+    cat = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category', verbose_name='Category')
+    count = models.ForeignKey(Country, on_delete=models.PROTECT, related_name='country',  verbose_name='Country')
+    prod = models.ForeignKey(Producer, on_delete=models.PROTECT, related_name='producer',  verbose_name='Producer')
+    price = models.DecimalField(max_digits=10, decimal_places=2,  verbose_name='Price')
+    weight = models.DecimalField(max_digits=10, decimal_places=2,  verbose_name='Weight')
+    length = models.DecimalField(max_digits=10, decimal_places=2,  verbose_name='Length')
+    spokes = models.CharField(max_length=10, blank=True,  verbose_name='Spokes')
+    hook = models.CharField(max_length=10, blank=True,  verbose_name='Hook')
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('')
+
     class Meta:
-        verbose_name = 'Yarn'
-        verbose_name_plural = 'Yarns'
+        verbose_name = 'SubCategory'
+        verbose_name_plural = 'SubCategories'
 
 
 class YarnImages(models.Model):
-    title = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='shop/')
-    yarn = models.ForeignKey(Yarn, on_delete=models.PROTECT)
+    title = models.CharField(max_length=40,  verbose_name='Name')
+    image = models.ImageField(upload_to='yarnimages/',  verbose_name='Image')
+    subcat = models.ForeignKey(SubCategory, on_delete=models.PROTECT,  verbose_name='Yarn')
 
     def __str__(self):
         return self.title
@@ -72,5 +77,39 @@ class YarnImages(models.Model):
     class Meta:
         verbose_name = 'YarnImage'
         verbose_name_plural = 'YarnImages'
+
+
+class Color(models.Model):
+    col = models.CharField(max_length=30,  verbose_name='Color')
+
+    def __str__(self):
+        return self.col
+
+    class Meta:
+        verbose_name = 'Color'
+        verbose_name_plural = 'Colors'
+
+
+class Yarn(models.Model):
+    name = models.CharField(max_length=40,  verbose_name='Name')
+    url = models.SlugField(unique=True,  verbose_name='Url')
+    image = models.ImageField(upload_to='yarn/',  verbose_name='Image')
+    subcat = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name='subcategory',  verbose_name='SubCategory')
+    col = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='color',  verbose_name='Color')
+    time_add = models.DateTimeField(auto_now_add=True,  verbose_name='Time_add')
+    time_update = models.DateTimeField(auto_now=True,  verbose_name='Time_update')
+    availability = models.BooleanField(default=True,  verbose_name='Availability')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('')
+
+    class Meta:
+        verbose_name = 'Yarn'
+        verbose_name_plural = 'Yarns'
+
+
 
 
