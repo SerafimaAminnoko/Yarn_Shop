@@ -1,0 +1,95 @@
+{% load tags %}
+<header class="header_container">
+        <div class="header">
+            <div class="logo">
+                <a href="{% url 'main' %}">
+                    <img src="static/shop/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="categories-list-container">
+                Categories
+                <ul class="categories-list">
+                    <li class="categories-list_item">
+                        {% get_categories as categories %}
+                        {% for category in categories %}
+                        <a href="{{ category.get_absolute_url }}">{{ category.cat }}</a>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+            <form class="search" action="" method="get">
+                <input type="text" placeholder="Search">
+                <button type="submit"><img src="static/shop/images/search.png"></button>
+            </form>
+            <div class="blog">
+                <a href="#">Blog</a>
+            </div>
+            <div class="about">
+                <a href="#">About</a>
+            </div>
+            <div class="contacts">
+                <a href="#">Contacts</a>
+            </div>
+            <div class="cart-icon">
+                <a href="#">
+                    <img src="static/shop/images/cart.png" alt="cart-icon">
+                </a>
+            </div>
+        </div>
+        <div class="header_mobile_container">
+            <div class="header_mobile">
+                <button class="header_mobile_menu">
+                    <img src="static/shop/images/menu-icon.png" alt="menu">
+                </button>
+                <div class="logo">
+                    <a href="#">
+                        <img src="static/shop/images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <form class="search" action="" method="get">
+                    <input type="text" placeholder="Search">
+                    <button type="submit"><img src="static/shop/images/search.png"></button>
+                </form>
+                <div class="cart-icon">
+                    <a href="#">
+                        <img src="static/shop/images/cart.png" alt="cart-icon">
+                    </a>
+                </div>
+            </div>
+            <ul class="header_mobile_menu-container">
+                <div class="mob_categories_list">
+                    <button class="mob_categories_close_button">
+                        <img src="static/shop/images/cancel-29.png" alt="cancel">
+                    </button>
+                    <ul>
+                        <li>
+                            <a href="#">Category</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <button class="header_mobile_close_menu_button">
+                        <img src="static/shop/images/cancel-29.png" alt="cancel">
+                    </button>
+                </div>
+                <li class="mob_categories-list-container">
+                    Categories
+                </li>
+                <li>
+                    <div class="blog">
+                        <a href="#">Blog</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="about">
+                        <a href="#">About</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="contacts">
+                        <a href="#">Contacts</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>

@@ -1,0 +1,46 @@
+<div class="navbar">
+                <form action="filter" method="get">
+                <button class="navbar_close"><h5>Close Filters</h5></button>
+                <div class="navbar_price">
+                    <h5>Price $</h5>
+                    {% for y in yarn_list %}
+                    <ul class="navbar_price_list">
+                        <li><a href="#">{{ y.subcat.price }}</a></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <div class="navbar_producer">
+                    <h5>Producer</h5>
+                    {% for producer in view.get_producers %}
+                    <ul class="navbar_producer_list">
+                        <li><a href="#">{{ producer.prod }}</a></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <div class="navbar_country">
+                    <h5>Country</h5>
+                    {% for country in view.get_countries %}
+                    <ul class="navbar_country_list">
+                        <li><a href="#">{{ country.count }}</a></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <div class="navbar_color">
+                    <h5>Color</h5>
+                    {% for color in view.get_colors %}
+                    <ul class="navbar_color_list">
+                    <input type="checkbox" class="checked" name="color" value="{{ col.id }}">
+                    <span>{{ color.col }}</span>
+                     </ul>
+                    {% endfor %}
+                </div>
+                <div class="navbar_availability">
+                    <h5>Availability</h5>
+                    <ul class="navbar_availability_list">
+                        <li class="navbar_availability_item"><a href="#">Available</a></li>
+                        <li class="navbar_availability_item"><a href="#">Not available</a></li>
+                    </ul>
+                </div>
+                <button type="submit" class="navbar_search">Search</button>
+                    </form>
+            </div>
