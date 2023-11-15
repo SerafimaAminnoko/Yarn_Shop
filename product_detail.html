@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarn Shop</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div class="product_detail">
+        <div class="product_detail-container">
+            <div class="slider_container">
+                <div class="product_slider">
+                    <h3 class="product_title">Blue yarn 100g</h3>
+                    <img class="product_image" src="./img/yarn.jpg" alt="image">
+                </div>
+                <div class="slider_switch-block">
+                    <button class="slider_next">
+                        <i class="arrow up"></i>
+                    </button>
+                    <button class="slider_previous disabled">
+                        <i class="arrow down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="product_characteristics">
+                <h4>Characteristics</h4>
+                <ul class="product_characteristics_list">
+                    <li>Lenght: 300m</li>
+                    <li>Weight: 300g</li>
+                    <li>Material: wool</li>
+                    <li>Spooks: fg</li>
+                    <li>Hook: fg</li>
+                    <li>Producer: YarnArt</li>
+                    <li>Country: Svea</li>
+                    <li>Color: blue</li>
+                    <li>Availability: available</li>
+                </ul>
+            </div>
+            <div class="product_buy-block">
+                <button class="product_buy-button">Buy</button>
+                <div class="product_price">300$</div>
+            </div>
+            <p class="product_description">
+                Мягкие тучки просто очаровательны и любимы всем пухляком! Просто зефирная нежность =) Они – это просто находка
+                для детских пледиков, игрушек, и многое другое. От одного прикосновения к этим мотокам уже становится тепло и
+                уютно. Пряжа достаточно толстая, поэтому вязать ее можно в одну нить, экономящую и облегчающую работу. Стирка
+                изделия рекомендуется ручной при температуре 40 °C, и, когда она правильно выполняет этот совет, вы будете
+                служить вам годами мягкостью и цветом. Поверьте, владелец изделий из пряжи ЯрнАрт Дольче полюбит его с первого
+                прикосновения и долго.
+            </p>
+        </div>
+    </div>
+    <script src="./slider.js"></script>
+    <script>
+        var slider = new Slider();
+        slider.initialization();
+    </script>
+</body>
+</html>
+
