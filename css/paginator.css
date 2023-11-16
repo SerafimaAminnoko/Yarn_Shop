@@ -1,0 +1,22 @@
+.paginator-container {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.paginator {
+    margin-top: 10px;
+}
+
+.paginator>li {
+    outline: none;
+    color: rgb(44, 14, 14);
+}
+
+.paginator>li:hover {
+    color: rgb(170, 30, 80);
+}
+
+.paginator>li:active {
+    color: #ccc;
+}
