@@ -25,10 +25,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'url', 'price', 'image', 'get_image']
+    list_display = ['id', 'name', 'url', 'price', 'cat', 'image', 'get_image',]
     list_display_links = ['name', ]
     prepopulated_fields = {'url': ('name',)}
-    readonly_fields = ('image', 'get_image')
+    readonly_fields = ('get_image',)
     list_filter = ('prod', 'price', 'count')
     search_fields = ('name',)
 
@@ -40,9 +40,9 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(YarnImages)
 class YarnImagesAdmin(admin.ModelAdmin):
-    list_display = ['title', 'subcat', 'image', 'get_image']
+    list_display = ['id', 'title', 'subcat', 'image', 'get_image']
     list_display_links = ('title',)
-    readonly_fields = ('image', 'get_image')
+    readonly_fields = ('get_image',)
     list_filter = ('subcat',)
     search_fields = ('title',)
 

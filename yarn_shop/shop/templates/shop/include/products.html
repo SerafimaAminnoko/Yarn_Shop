@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% for y in yarn_list %}
+                    <a href="#" class="store_products-list_item">
+                        <h4 class="store_item_title">{{ y.name }}</h4>
+                        <div class="store_item_image">
+                            <img src="{{ y.image.url }}" alt="image" width="240">
+                        </div>
+                        <div class="store_item_description"></div>
+                        <h5 class="price">{{ y.subcat.price }}$</h5>
+
+                    </a>
+                {% endfor %}
