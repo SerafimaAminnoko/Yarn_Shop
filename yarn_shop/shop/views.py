@@ -25,9 +25,6 @@ class Filters:
     def get_countries(self):
         return Country.objects.all()
 
-    def get_prices(self):
-        return SubCategory.objects.all().values("price")
-
 
 class ProductList(Filters, ListView):
     model = Yarn
@@ -68,11 +65,16 @@ class SubCategoryProductList(Filters, ListView):
         return context
 
 
+
+
 class FilterYarnList(Filters, ListView,):
     template_name = 'shop/main.html'
 
     def get_queryset(self):
         FilterPrice = self.request.GET['FilterPrice']
+        availability = self.request.GET.get('available', True)
+        absence = self.request.GET.get('available')
+
         q = Q()
         if "country" in self.request.GET:
             q = Q(count__in=self.request.GET.getlist("country"))
@@ -82,6 +84,11 @@ class FilterYarnList(Filters, ListView,):
             q &= Q(col__in=self.request.GET.getlist("color"))
         if "price" in self.request.GET:
             q &= Q(subcat__price__lte=FilterPrice)
+        if "available" in self.request.GET:
+            q &= Q(availability=availability)
+        if "available" in self.request.GET:
+            q &= Q(availability=absence)
+
         queryset = Yarn.objects.filter(q).distinct()
         return queryset
 
@@ -92,4 +99,15 @@ class FilterYarnList(Filters, ListView,):
 
 
 
+class ProductDetail(Filters, DetailView):
+    model = Yarn
+    template_name = 'shop/product_detail.html'
+
+    def get_object(self, queryset=None):
+        return Yarn.objects.get(url=self.kwargs['product_slug'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        return context
 
