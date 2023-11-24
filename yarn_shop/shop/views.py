@@ -98,7 +98,6 @@ class FilterYarnList(Filters, ListView,):
         return context
 
 
-
 class ProductDetail(Filters, DetailView):
     model = Yarn
     template_name = 'shop/product_detail.html'
@@ -108,6 +107,7 @@ class ProductDetail(Filters, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['images'] = YarnImages.objects.all()
         context['minMaxPrice'] = Filters.get_minMaxPrice(self)
         return context
 

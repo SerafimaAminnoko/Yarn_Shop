@@ -4,18 +4,18 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .slider_container {
     display: flex;
     gap: 25px;
-    height: 100%; 
+    /*height: 100%;*/
 }
 
 .product_image {
     width: 400px;
-    height: 400px;
+    max-height: 400px;
     padding: 15px;
     border: 2px solid rgba(44, 14, 14);
     border-radius: 15px;

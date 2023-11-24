@@ -98,7 +98,7 @@ class Yarn(models.Model):
     cat = models.ForeignKey(Category, on_delete=models.PROTECT,  verbose_name='Category')
     count = models.ForeignKey(Country, on_delete=models.PROTECT, verbose_name='Country')
     prod = models.ForeignKey(Producer, on_delete=models.PROTECT, verbose_name='Producer')
-    subcat = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name='subcategory',  verbose_name='SubCategory')
+    subcat = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name='subcategory_yarns',  verbose_name='SubCategory', )
     col = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='color',  verbose_name='Color')
     time_add = models.DateTimeField(auto_now_add=True,  verbose_name='Time_add')
     time_update = models.DateTimeField(auto_now=True,  verbose_name='Time_update')
