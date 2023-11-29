@@ -2,11 +2,11 @@
 
 {% block content %}
 <div class="store_products-list">
-                    {% for s in subcategory_list.subcategory_yarns__set.all %}
+                    {% for s in subcategory_list %}
                     <a href="{{ s.get_absolute_url }}" class="store_products-list_item">
                         <h4 class="store_item_title">{{ s.name }}</h4>
                         <div class="store_item_image">
-                            <img src="{{ s.image.url }}" alt="image" width="240">
+                            <img src="{{ s.image.url }}" alt="image" width="300">
                         </div>
                     </a>
                     {% endfor %}

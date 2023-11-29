@@ -12,11 +12,16 @@
 
     <div class="product_detail">
         <div class="product_detail-container">
+
             <div class="slider_container">
                 <div class="product_slider">
-                    <h3 class="product_title">{{ yarn.name }}</h3>
-                    <img class="product_image" src="{{ yarn.image.url }}" alt="image">
+
+                    <img id="YarnImage" class="product_image" src="{{ yarn.image.url }}" alt="image">
+                    {% for s in yarn.subcat.yarnimages_set.all %}
+                    <img id="ProductImage" class="product_image" src="{{ s.image.url }}" alt="image" >
+                    {% endfor %}
                 </div>
+
                 <div class="slider_switch-block">
                     <button class="slider_next">
                         <i class="arrow up"></i>
@@ -54,9 +59,14 @@
         </div>
     </div>
     {% include 'shop/include/footer.html' %}
-    <script src="shop/static/js/slider.js"></script>
+
+   <script  type="text/javascript" src="{% static 'shop/js/slider.js' %}"></script>
     <script>
-        var slider = new Slider();
+
+        let img = document.getElementById('ProductImage');
+        console.log(img);
+        let images = [];
+        var slider = new Slider(img);
         slider.initialization();
     </script>
 

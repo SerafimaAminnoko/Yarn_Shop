@@ -1,8 +1,8 @@
 {% for y in yarn_list %}
-                    <a href="{{ y.get_absolute_url }}" class="store_products-list_item">
+                        <a href="{{ y.get_absolute_url }}" class="store_products-list_item">
                         <h4 class="store_item_title">{{ y.name }}</h4>
                         <div class="store_item_image">
-                            <img src="{{ y.image.url }}" alt="image" width="240">
+                            <img src="{{ y.image.url }}" alt="image" width="300">
                         </div>
                         <div class="store_item_description"></div>
                         <h5 class="price">{{ y.subcat.price }}$</h5>

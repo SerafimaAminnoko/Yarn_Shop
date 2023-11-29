@@ -1,5 +1,5 @@
-function Slider () {
-    this.sliderURLs = ['./img/yarn.jpg', './img/yarn2.jpg', './img/yarn3.jpg'];
+function Slider (array) {
+    this.sliderURLs = array;
     this.currentIndex = 0;
     this.nextButton = document.querySelector('.slider_next');
     this.previousButton = document.querySelector('.slider_previous');
@@ -42,5 +42,4 @@ function Slider () {
         };
     };
 }
-
 
