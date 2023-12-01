@@ -15,10 +15,9 @@
 
             <div class="slider_container">
                 <div class="product_slider">
-
-                    <img id="YarnImage" class="product_image" src="{{ yarn.image.url }}" alt="image">
+                    <img class="product_image" src="{{ yarn.image.url }" >
                     {% for s in yarn.subcat.yarnimages_set.all %}
-                    <img id="ProductImage" class="product_image" src="{{ s.image.url }}" alt="image" >
+                    <img class="product_image" src="{{ s.image.url }}" alt="image" >
                     {% endfor %}
                 </div>
 
@@ -63,11 +62,6 @@
    <script  type="text/javascript" src="{% static 'shop/js/slider.js' %}"></script>
     <script>
 
-        let img = document.getElementById('ProductImage');
-        console.log(img);
-        let images = [];
-        var slider = new Slider(img);
-        slider.initialization();
     </script>
 
 </body>

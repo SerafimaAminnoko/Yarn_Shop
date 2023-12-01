@@ -18,8 +18,8 @@
                     </li>
                 </ul>
             </div>
-            <form class="search" action="" method="get">
-                <input type="text" placeholder="Search">
+            <form class="search" action="{% url 'search' %}" method="get">
+                <input type="text" placeholder="Search" name="q">
                 <button type="submit"><img src="{% static 'shop/images/search.png' %}"></button>
             </form>
             <div class="blog">
@@ -47,8 +47,8 @@
                         <img src="{% static 'shop/images/logo.png' %}" alt="logo">
                     </a>
                 </div>
-                <form class="search" action="" method="get">
-                    <input type="text" placeholder="Search">
+                <form class="search" action="{% url 'search' %}" method="get">
+                    <input type="search" placeholder="Search" name="q">
                     <button type="submit"><img src="{% static 'shop/images/search.png' %}"></button>
                 </form>
                 <div class="cart-icon">

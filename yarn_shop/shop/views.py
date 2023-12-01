@@ -27,7 +27,7 @@ class Filters:
 
 
 class ProductList(Filters, ListView):
-    model = Yarn
+    paginate_by = 1
     queryset = Yarn.objects.all()
     template_name = 'shop/main.html'
 
@@ -38,7 +38,7 @@ class ProductList(Filters, ListView):
 
 
 class CategoryProductList(Filters, ListView):
-    model = Yarn
+    paginate_by = 10
     template_name = 'shop/subcategories.html'
 
     def get_queryset(self):
@@ -52,7 +52,7 @@ class CategoryProductList(Filters, ListView):
 
 
 class SubCategoryProductList(Filters, ListView):
-    model = Yarn
+    paginate_by = 10
     template_name = 'shop/subcategory_products.html'
 
     def get_queryset(self):
@@ -65,9 +65,8 @@ class SubCategoryProductList(Filters, ListView):
         return context
 
 
-
-
 class FilterYarnList(Filters, ListView,):
+    paginate_by = 10
     template_name = 'shop/main.html'
 
     def get_queryset(self):
@@ -98,7 +97,20 @@ class FilterYarnList(Filters, ListView,):
         return context
 
 
-class ProductDetail(Filters, DetailView):
+class Search(Filters, ListView):
+    paginate_by = 10
+    template_name = 'shop/main.html'
+
+    def get_queryset(self):
+        return Yarn.objects.filter(name__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        return context
+
+
+class ProductDetail(DetailView):
     model = Yarn
     template_name = 'shop/product_detail.html'
 
@@ -108,7 +120,6 @@ class ProductDetail(Filters, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['yarns'] = Yarn.objects.all()
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
         return context
 
 
