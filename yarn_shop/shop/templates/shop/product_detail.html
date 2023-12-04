@@ -14,8 +14,8 @@
         <div class="product_detail-container">
 
             <div class="slider_container">
-                <div class="product_slider">
-                    <img class="product_image" src="{{ yarn.image.url }" >
+                <div >
+                    <img class="product_image" src="{{ yarn.image.url }}" >
                     {% for s in yarn.subcat.yarnimages_set.all %}
                     <img class="product_image" src="{{ s.image.url }}" alt="image" >
                     {% endfor %}

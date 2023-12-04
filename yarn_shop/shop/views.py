@@ -27,7 +27,7 @@ class Filters:
 
 
 class ProductList(Filters, ListView):
-    paginate_by = 1
+    paginate_by = 10
     queryset = Yarn.objects.all()
     template_name = 'shop/main.html'
 
@@ -124,9 +124,8 @@ class ProductDetail(DetailView):
 
 
 class P(ListView):
-    model = Yarn
     queryset = Yarn.objects.all()
-    template_name = 'shop/p.html'
+    template_name = 'shop/index.html'
 
 
 
