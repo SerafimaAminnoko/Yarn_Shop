@@ -13,13 +13,17 @@
     <div class="product_detail">
         <div class="product_detail-container">
 
-            <div class="slider_container">
-                <div >
-                    <img class="product_image" src="{{ yarn.image.url }}" >
-                    {% for s in yarn.subcat.yarnimages_set.all %}
-                    <img class="product_image" src="{{ s.image.url }}" alt="image" >
-                    {% endfor %}
-                </div>
+
+
+
+
+
+
+
+
+
+
+
 
                 <div class="slider_switch-block">
                     <button class="slider_next">
@@ -29,7 +33,17 @@
                         <i class="arrow down"></i>
                     </button>
                 </div>
-            </div>
+
+
+
+
+
+
+
+
+
+
+
             <div class="product_characteristics">
                 <h4>Characteristics</h4>
                 <ul class="product_characteristics_list">
@@ -56,13 +70,29 @@
                {{ yarn.subcat.description }}
             </p>
         </div>
+
     </div>
     {% include 'shop/include/footer.html' %}
+<div class="col s12">
+                   <div class="slider">
+                       <ul class="slides">
 
-   <script  type="text/javascript" src="{% static 'shop/js/slider.js' %}"></script>
-    <script>
+                            {% for s in yarn.subcat.yarnimages_set.all %}
+                               <img class="product_image" src="{{ s.image.url }}">
+                            {% endfor %}
 
-    </script>
+                       </ul>
+                   </div>
+</div>
+<script src="{% static 'shop/js/jquery-3.7.1.js' %}"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function() {
+       $('.slider').slider({full_width: true});
+    });
+
+</script>
 
 </body>
 </html>

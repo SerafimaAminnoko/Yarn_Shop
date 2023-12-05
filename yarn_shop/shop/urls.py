@@ -10,5 +10,4 @@ urlpatterns = [
     path('subcategory/<slug:subcat_slug>/', SubCategoryProductList.as_view(), name='subcat'),
     path('filter/', FilterYarnList.as_view(), name='filter'),
     path('<slug:product_slug>/', ProductDetail.as_view(), name='product_detail'),
-
 ]

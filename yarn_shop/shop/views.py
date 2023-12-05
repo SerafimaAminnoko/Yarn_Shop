@@ -125,7 +125,7 @@ class ProductDetail(DetailView):
 
 class P(ListView):
     queryset = Yarn.objects.all()
-    template_name = 'shop/index.html'
+    template_name = 'shop/p.html'
 
 
 
