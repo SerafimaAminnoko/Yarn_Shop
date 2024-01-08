@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="store_head">
+                        <div class="categories-list-container">
+                            OrderBy
+                            <ul class="categories-list">
+                               <li>
+                                  <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ absent }}{{ paginate_by }}ordering=name">by_alphabet</a>
+                               </li>
+                               <li>
+                                  <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ absent }}{{ paginate_by }}ordering=subcat__price">cheap_on_top</a>
+                               </li>
+                               <li>
+                                  <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ absent }}{{ paginate_by }}ordering=-subcat__price">expensive_on_top</a>
+                               </li>
+                            </ul>
+                        </div>
+                    </div>
+<div class="store_products-list">
+    {% include 'shop/include/products.html' %}
+</div>
+{% endblock %}

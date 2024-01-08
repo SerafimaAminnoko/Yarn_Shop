@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yarn Shop</title>
     <link rel="stylesheet" href="{% static 'shop/css/index.css' %}" type="text/css" media="all">
+    <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 
 <body>
@@ -14,35 +16,23 @@
         <div class="product_detail-container">
 
 
+        <div class="swiffy-slider">
+    <ul class="slider-container">
+        <li><img class="product_image" src="{{ yarn.image.url }}" height="400"></li>
+        {% for s in yarn.subcat.yarnimages_set.all %}
+        <li><img class="product_image" src="{{ s.image.url }}" height="400"></li>
+        {% endfor %}
+    </ul>
 
+    <button type="button" class="slider-nav"></button>
+    <button type="button" class="slider-nav slider-nav-next"></button>
 
-
-
-
-
-
-
-
-
-
-                <div class="slider_switch-block">
-                    <button class="slider_next">
-                        <i class="arrow up"></i>
-                    </button>
-                    <button class="slider_previous disabled">
-                        <i class="arrow down"></i>
-                    </button>
-                </div>
-
-
-
-
-
-
-
-
-
-
+    <div class="slider-indicators">
+        <button class="active"></button>
+        <button></button>
+        <button></button>
+    </div>
+</div>
 
             <div class="product_characteristics">
                 <h4>Characteristics</h4>
@@ -73,26 +63,10 @@
 
     </div>
     {% include 'shop/include/footer.html' %}
-<div class="col s12">
-                   <div class="slider">
-                       <ul class="slides">
 
-                            {% for s in yarn.subcat.yarnimages_set.all %}
-                               <img class="product_image" src="{{ s.image.url }}">
-                            {% endfor %}
 
-                       </ul>
-                   </div>
-</div>
-<script src="{% static 'shop/js/jquery-3.7.1.js' %}"></script>
 
-<script type="text/javascript" charset="utf-8">
 
-    $(document).ready(function() {
-       $('.slider').slider({full_width: true});
-    });
-
-</script>
 
 </body>
 </html>

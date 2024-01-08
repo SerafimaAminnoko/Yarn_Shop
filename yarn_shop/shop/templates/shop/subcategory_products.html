@@ -1,6 +1,17 @@
 {% extends 'shop/base.html' %}
 
 {% block content %}
+<div class="store_head">
+    <form action="" method="get">
+        {{ form.as_p }}
+        Paginate_by:<select name="paginate_by">
+                                <option>16</option>
+                                <option>32</option>
+                                <option>64</option>
+                    </select>
+        <button type="submit">Press</button>
+    </form>
+</div>
 <div class="store_products-list">
 
                         <h4 class="store_item_title">{{ subcategory.name }}</h4>

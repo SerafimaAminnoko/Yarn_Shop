@@ -9,21 +9,17 @@
     <link rel="stylesheet" href="{% static 'shop/css/index.css' %}" type="text/css" media="all">
 </head>
 <body>
+
     {% include 'shop/include/header.html' %}
     <main class="main_container">
         <div class="main">
+
             {% include 'shop/include/navbar.html' %}
             <div class="store">
                 <div class="store_head">
                     <div class="store_sub-head">
                         <button class="store_show-filters">Filters</button>
-                        <h2>100 goods available</h2>
-                    </div>
-                    <div class="store_set-goods-count">
-                        <h4 class="store_set-goods-count_title">Goods on page:</h4>
-                        <a href="#">16</a>
-                        <a href="#">24</a>
-                        <a href="#">32</a>
+                        <h2>{{ count }} goods available</h2>
                     </div>
                 </div>
                 {% block content %}

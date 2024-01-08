@@ -1,79 +1,94 @@
-from decimal import Decimal
-
-from django.db.models import Q, Min, Max, Avg
-from django.http import HttpResponse
-from django.shortcuts import render
-
 # Create your views here.
+from django.db.models import Q
 from django.views.generic import ListView, DetailView
-from unicodedata import decimal
-
-from shop.filters import YarnFilter
+from shop.forms import YarnFilterForm
 from shop.models import *
+from shop.utils import DataMixin
 
 
-class Filters:
-    def get_minMaxPrice(self):
-        return SubCategory.objects.aggregate(Min('price'), Max('price'), Avg('price'))
-
-    def get_colors(self):
-        return Color.objects.all()
-
-    def get_producers(self):
-        return Producer.objects.all()
-
-    def get_countries(self):
-        return Country.objects.all()
-
-
-class ProductList(Filters, ListView):
-    paginate_by = 10
-    queryset = Yarn.objects.all()
+class ProductList(DataMixin, ListView):
+    paginate_by = 16
     template_name = 'shop/main.html'
 
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+
+    def get_queryset(self):
+        form = YarnFilterForm(self.request.GET)
+        yarn = Yarn.objects.all()
+        if form.is_valid():
+            if form.cleaned_data["ordering"]:
+                return yarn.order_by(form.cleaned_data["ordering"])
+        return yarn
+
     def get_context_data(self, *args, **kwargs):
+
         context = super().get_context_data(**kwargs)
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        context['paginate_by'] = f"paginate_by={self.request.GET.get('paginate_by', self.paginate_by)}&"
+        context['count'] = Yarn.objects.filter(availability=True).count()
+        c_def = self.get_user_context()
+        context = dict(list(context.items()) + list(c_def.items()))
         return context
 
 
-class CategoryProductList(Filters, ListView):
-    paginate_by = 10
+class CategoryProductList(DataMixin, ListView):
+    paginate_by = 16
     template_name = 'shop/subcategories.html'
 
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+
     def get_queryset(self):
-        return Yarn.objects.filter(cat__url=self.kwargs['cat_slug'])
+        form = YarnFilterForm(self.request.GET)
+        yarn = Yarn.objects.filter(cat__url=self.kwargs['cat_slug']).order_by('name')
+        if form.is_valid():
+            if form.cleaned_data["ordering"]:
+                return yarn.order_by(form.cleaned_data["ordering"])
+        return yarn
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['paginate_by'] = f"paginate_by={self.request.GET.get('paginate_by', self.paginate_by)}&"
+        context['count'] = Yarn.objects.filter(cat__url=self.kwargs['cat_slug'], availability=True).count()
         context['subcategory_list'] = SubCategory.objects.filter(cat__url=self.kwargs['cat_slug'])
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        c_def = self.get_user_context()
+        context = dict(list(context.items()) + list(c_def.items()))
         return context
 
 
-class SubCategoryProductList(Filters, ListView):
-    paginate_by = 10
+class SubCategoryProductList(DataMixin, ListView):
+    paginate_by = 16
     template_name = 'shop/subcategory_products.html'
 
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+
     def get_queryset(self):
-        return Yarn.objects.filter(subcat__url=self.kwargs['subcat_slug'])
+        form = YarnFilterForm(self.request.GET)
+        yarn = Yarn.objects.filter(subcat__url=self.kwargs['subcat_slug']).order_by('name')
+        if form.is_valid():
+            if form.cleaned_data["ordering"]:
+                return yarn.order_by(form.cleaned_data["ordering"])
+        return yarn
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['paginate_by'] = f"paginate_by={self.request.GET.get('paginate_by', self.paginate_by)}&"
+        context['count'] = Yarn.objects.filter(subcat__url=self.kwargs['subcat_slug'], availability=True).count()
         context['subcategory'] = SubCategory.objects.get(url=self.kwargs['subcat_slug'])
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        c_def = self.get_user_context()
+        context = (dict(list(context.items()) + list(c_def.items())))
         return context
 
 
-class FilterYarnList(Filters, ListView,):
-    paginate_by = 10
-    template_name = 'shop/main.html'
+class FilterYarnList(DataMixin, ListView,):
+    paginate_by = 16
+    template_name = 'shop/search-filter.html'
+
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
 
     def get_queryset(self):
-        FilterPrice = self.request.GET['FilterPrice']
-        availability = self.request.GET.get('available', True)
-        absence = self.request.GET.get('available')
-
         q = Q()
         if "country" in self.request.GET:
             q = Q(count__in=self.request.GET.getlist("country"))
@@ -81,32 +96,54 @@ class FilterYarnList(Filters, ListView,):
             q &= Q(prod__in=self.request.GET.getlist("producer"))
         if "color" in self.request.GET:
             q &= Q(col__in=self.request.GET.getlist("color"))
-        if "price" in self.request.GET:
-            q &= Q(subcat__price__lte=FilterPrice)
+        if "max-price" in self.request.GET:
+            q &= Q(subcat__price__lte=self.request.GET['max-price'])
         if "available" in self.request.GET:
-            q &= Q(availability=availability)
-        if "available" in self.request.GET:
-            q &= Q(availability=absence)
+            q &= Q(availability=True)
 
-        queryset = Yarn.objects.filter(q).distinct()
-        return queryset
+        form = YarnFilterForm(self.request.GET)
+        yarn = Yarn.objects.filter(q).distinct()
+        if form.is_valid():
+            if form.cleaned_data["ordering"]:
+                return yarn.order_by(form.cleaned_data["ordering"])
+        return yarn
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        context['price'] = f'max-price={self.request.GET["max-price"]}&'
+        context['producer'] = ''.join([f'producer={x}&' for x in self.request.GET.getlist("producer")])
+        context['country'] = ''.join([f'country={x}&' for x in self.request.GET.getlist("country")])
+        context['color'] = ''.join([f'color={x}&' for x in self.request.GET.getlist("color")])
+        context['available'] = ''.join([f'available={self.request.GET.get("available", True)}&'])
+        context['paginate_by'] = f'paginate_by={self.request.GET.get("paginate_by", self.paginate_by)}&'
+        context['count'] = Yarn.objects.filter(availability=True).count()
+        c_def = self.get_user_context()
+        context = (dict(list(context.items()) + list(c_def.items())))
         return context
 
 
-class Search(Filters, ListView):
-    paginate_by = 10
-    template_name = 'shop/main.html'
+class Search(DataMixin, ListView):
+    paginate_by = 16
+    template_name = 'shop/search-filter.html'
+
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
 
     def get_queryset(self):
-        return Yarn.objects.filter(name__icontains=self.request.GET.get('q'))
+        form = YarnFilterForm(self.request.GET)
+        yarn = Yarn.objects.filter(name__icontains=self.request.GET.get('query')).order_by('name')
+        if form.is_valid():
+            if form.cleaned_data["ordering"]:
+                return yarn.order_by(form.cleaned_data["ordering"])
+        return yarn
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['minMaxPrice'] = Filters.get_minMaxPrice(self)
+        context['paginate_by'] = f'paginate_by={self.request.GET.get("paginate_by", self.paginate_by)}&'
+        context['count'] = Yarn.objects.filter(availability=True).count()
+        context['q'] = f'query={self.request.GET.get("query")}&'
+        c_def = self.get_user_context()
+        context = (dict(list(context.items()) + list(c_def.items())))
         return context
 
 
@@ -123,9 +160,6 @@ class ProductDetail(DetailView):
         return context
 
 
-class P(ListView):
-    queryset = Yarn.objects.all()
-    template_name = 'shop/p.html'
 
 
 
