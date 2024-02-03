@@ -14,11 +14,11 @@
 </div>
 <div class="store_products-list">
 
-                        <h4 class="store_item_title">{{ subcategory.name }}</h4>
+                        <h4 class="store_item_title">{{ subcategory_object.name }}</h4>
                         <div class="store_item_image">
-                            <img src="{{ subcategory.image.url }}" alt="image" width="300">
+                            <img src="{{ subcategory_object.image.url }}" alt="image" width="300">
                         </div>
-                    <div class="store_item_description">{{ subcategory.description }}</div>
+                    <div class="store_item_description">{{ subcategory_object.description }}</div>
 
                     {% include 'shop/include/products.html' %}
                 </div>

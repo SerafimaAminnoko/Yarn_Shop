@@ -7,7 +7,7 @@ from shop.utils import DataMixin
 
 
 class ProductList(DataMixin, ListView):
-    paginate_by = 16
+    paginate_by = 3
     template_name = 'shop/main.html'
 
     def get_paginate_by(self, queryset):
@@ -19,7 +19,7 @@ class ProductList(DataMixin, ListView):
         if form.is_valid():
             if form.cleaned_data["ordering"]:
                 return yarn.order_by(form.cleaned_data["ordering"])
-        return yarn
+        return yarn.order_by('name')
 
     def get_context_data(self, *args, **kwargs):
 
@@ -33,7 +33,7 @@ class ProductList(DataMixin, ListView):
 
 class CategoryProductList(DataMixin, ListView):
     paginate_by = 16
-    template_name = 'shop/subcategories.html'
+    template_name = 'shop/category_product_list.html'
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('paginate_by', self.paginate_by)
@@ -44,7 +44,7 @@ class CategoryProductList(DataMixin, ListView):
         if form.is_valid():
             if form.cleaned_data["ordering"]:
                 return yarn.order_by(form.cleaned_data["ordering"])
-        return yarn
+        return yarn.order_by('name')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,7 +58,7 @@ class CategoryProductList(DataMixin, ListView):
 
 class SubCategoryProductList(DataMixin, ListView):
     paginate_by = 16
-    template_name = 'shop/subcategory_products.html'
+    template_name = 'shop/subcategory_product_list.html'
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('paginate_by', self.paginate_by)
@@ -69,21 +69,21 @@ class SubCategoryProductList(DataMixin, ListView):
         if form.is_valid():
             if form.cleaned_data["ordering"]:
                 return yarn.order_by(form.cleaned_data["ordering"])
-        return yarn
+        return yarn.order_by('name')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['paginate_by'] = f"paginate_by={self.request.GET.get('paginate_by', self.paginate_by)}&"
         context['count'] = Yarn.objects.filter(subcat__url=self.kwargs['subcat_slug'], availability=True).count()
-        context['subcategory'] = SubCategory.objects.get(url=self.kwargs['subcat_slug'])
+        context['subcategory_object'] = SubCategory.objects.get(url=self.kwargs['subcat_slug'])
         c_def = self.get_user_context()
         context = (dict(list(context.items()) + list(c_def.items())))
         return context
 
 
-class FilterYarnList(DataMixin, ListView,):
+class FilterProductList(DataMixin, ListView,):
     paginate_by = 16
-    template_name = 'shop/search-filter.html'
+    template_name = 'shop/search-filter_product_list.html'
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('paginate_by', self.paginate_by)
@@ -106,7 +106,7 @@ class FilterYarnList(DataMixin, ListView,):
         if form.is_valid():
             if form.cleaned_data["ordering"]:
                 return yarn.order_by(form.cleaned_data["ordering"])
-        return yarn
+        return yarn.order_by('name')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -122,9 +122,9 @@ class FilterYarnList(DataMixin, ListView,):
         return context
 
 
-class Search(DataMixin, ListView):
+class SearchProductList(DataMixin, ListView):
     paginate_by = 16
-    template_name = 'shop/search-filter.html'
+    template_name = 'shop/search-filter_product_list.html'
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('paginate_by', self.paginate_by)
@@ -135,7 +135,7 @@ class Search(DataMixin, ListView):
         if form.is_valid():
             if form.cleaned_data["ordering"]:
                 return yarn.order_by(form.cleaned_data["ordering"])
-        return yarn
+        return yarn.order_by('name')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)

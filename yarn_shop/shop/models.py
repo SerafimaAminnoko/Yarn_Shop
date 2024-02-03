@@ -64,7 +64,7 @@ class SubCategory(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('subcat', kwargs={'subcat_slug': self.url})
+        return reverse('subcategory', kwargs={'subcat_slug': self.url})
 
 
 class YarnImages(models.Model):
