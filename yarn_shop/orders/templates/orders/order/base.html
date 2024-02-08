@@ -9,38 +9,31 @@
     <title>Yarn Shop</title>
     <link rel="stylesheet" href="{% static 'shop/css/index.css' %}" type="text/css" media="all">
 </head>
+{% cache 60 orders %}
 <body>
 
     {% include 'shop/include/header.html' %}
-
     <main class="main_container">
         <div class="main">
 
-            {% include 'shop/include/navbar.html' %}
 
             <div class="store">
                 <div class="store_head">
-                    <div class="store_sub-head">
-                        <button class="store_show-filters">Filters</button>
-                        <h2>{{ count }} goods available</h2>
-                    </div>
+
                 </div>
                 {% block content %}
+
                 {% endblock %}
-                {% include 'shop/include/paginator.html' %}
-                {% recently_added %}
 
             </div>
         </div>
     </main>
-    {% cache 60 * 15 footer %}
     {% include 'shop/include/footer.html' %}
-    {% endcache %}
     <script>
         function setDisplayStyle (elClass, targClass, targStyle) {
             document
             .querySelector(elClass)
-            .addEventListener('click', 
+            .addEventListener('click',
                 () => {document.querySelector(targClass).style.display = targStyle}
             )
         }
@@ -53,4 +46,5 @@
         setDisplayStyle('.header_mobile_close_menu_button', '.header_mobile_menu-container', 'none');
     </script>
 </body>
+{% endcache %}
 </html>

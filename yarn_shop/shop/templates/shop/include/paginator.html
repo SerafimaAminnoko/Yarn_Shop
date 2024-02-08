@@ -1,33 +1,32 @@
-{% load static %}
 
 
-<nav class='pagination-container'>
-    <ul class="paginator">
+<div class='pagination-container'>
+    <div class="paginator">
         {% if page_obj.has_previous %}
-        <li>
-            <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ page_obj.previous_page_number }}">&lt;</a>
-        </li>
+        <div>
+            <a href="?{{ q }}{{ price }}{{ producer }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ page_obj.previous_page_number }}">&lt;</a>
+        </div>
         {% endif %}
 
         {% for p in page_obj.paginator.page_range %}
         {% if page_obj.number == p %}
-        <li class="page-num-page-num-selected">
+        <div class="page-num-page-num-selected">
             {{ p }}
-        </li>
+        </div>
         {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-        <li>
-            <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ p }}">{{ p }}</a>
-        </li>
+        <div>
+            <a href="?{{ q }}{{ price }}{{ producer }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ p }}">{{ p }}</a>
+        </div>
         {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <li>
-            <a href="?{{ q }}{{ price }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ page_obj.next_page_number }}">&gt;</a>
-        </li>
+        <div>
+            <a href="?{{ q }}{{ price }}{{ producer }}{{ country }}{{ color }}{{ available }}{{ ordering }}{{ paginate_by}}page={{ page_obj.next_page_number }}">&gt;</a>
+        </div>
         {% endif %}
-    </ul>
-</nav>
+    </div>
+</div>
 
 
 

@@ -1,0 +1,86 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarn Shop</title>
+    <link rel="stylesheet" href="{% static 'shop/css/index.css' %}" type="text/css" media="all">
+
+</head>
+
+{% block title %}
+{% endblock %}
+{% block content %}
+    <main class="cart">
+        <header class="cart-head">
+            <h4 class="cart_title">
+                <img class="cart-icon" src="{% static 'shop/images/cart.png' %}" alt="cart-icon">
+                Your cart
+            </h4>
+            <h4 class="cart-items-count">Goods in cart:
+                <span>
+                    {{ item.quantity }}
+                </span>
+            </h4>
+        </header>
+            {% for item in cart %}
+            {% with yarn=item.yarn %}
+        <ul class="cart_items_menu">
+            <li class="cart_items_menu_list-item">
+                <div class="list-item_description">
+                    <div class="list-item_description_title-and-price">
+                        <h4>
+                            <a href="{{ yarn.get_absolute_url }}">{{ yarn.name }}</a>
+                        </h4>
+                        <div>${{ item.total_price }}</div>
+
+                    </div>
+                    <div class="list-item_image">
+                        <img src="
+                                {% if yarn.image %}
+                                    {{ yarn.image.url }}
+                                {% else %}
+                                    {% static 'img/no_image.png' %}
+                                {% endif %}"
+                        alt="product image">
+                    </div>
+                </div>
+                <div class="list-item_count">
+                    <form action="{% url 'cart_add' yarn.id %}" method="post">
+                        {{ item.update_quantity_form.quantity }}
+                        {{ item.update_quantity_form.update }}
+                        <input class="product_buy-button" type="submit" value="Update">
+                        {% csrf_token %}
+                    </form>
+                    <a href="{% url 'cart_remove' yarn.id %}">Remove</a>
+                </div>
+            </li>
+        </ul>
+            {% endwith %}
+            {% endfor %}
+        <div class="cart_footer">
+            <h4 class="cart-footer_sum">
+                In total:
+                <div>${{ cart.get_total_price }}</div>
+            </h4>
+            <span>
+                <button class="order-button">
+                    <a href="{% url 'main' %}" class="button light">Continue shopping</a>
+                </button>
+                <button class="order-button">
+                    <a href="{% url 'order_create' %}" class="button">Make Order</a>
+                </button>
+            </span>
+        </div>
+    </main>
+
+{% endblock %}
+
+
+
+
+
+
+
+

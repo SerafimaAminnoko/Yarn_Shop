@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yarn Shop</title>
     <link rel="stylesheet" href="{% static 'shop/css/index.css' %}" type="text/css" media="all">
-    <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
-    <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -14,26 +13,14 @@
 
     <div class="product_detail">
         <div class="product_detail-container">
-
-
-        <div class="swiffy-slider">
-    <ul class="slider-container">
-        <li><img class="product_image" src="{{ yarn.image.url }}" height="400"></li>
-        {% for s in yarn.subcat.yarnimages_set.all %}
-        <li><img class="product_image" src="{{ s.image.url }}" height="400"></li>
-        {% endfor %}
-    </ul>
-
-    <button type="button" class="slider-nav"></button>
-    <button type="button" class="slider-nav slider-nav-next"></button>
-
-    <div class="slider-indicators">
-        <button class="active"></button>
-        <button></button>
-        <button></button>
-    </div>
 </div>
 
+            <div class="product_images-table">
+                <img class="product_image" src="{{ yarn.image.url }}" height="400">
+                {% for s in yarn.subcat.yarnimages_set.all %}
+                <img class="product_image" src="{{ s.image.url }}" height="400">
+                {% endfor %}
+            </div>
             <div class="product_characteristics">
                 <h4>Characteristics</h4>
                 <ul class="product_characteristics_list">
@@ -52,13 +39,23 @@
                     {% endif %}
                 </ul>
             </div>
-            <div class="product_buy-block">
-                <button class="product_buy-button">Buy</button>
-                <div class="product_price">{{ yarn.subcat.price }}$</div>
-            </div>
+
             <p class="product_description">
                {{ yarn.subcat.description }}
             </p>
+            {% if yarn.availability == True %}
+                        <div class="product_buy-block">
+
+                <form action="{% url 'cart_add' yarn.id %}" method="post">
+                {{ cart_yarn_form }}
+                {% csrf_token %}
+                <input class="product_buy-button" type="submit" value="Buy">
+                </form>
+                <div class="product_price">{{ yarn.subcat.price }}$</div>
+            </div>
+            {% else %}
+
+            {% endif %}
         </div>
 
     </div>

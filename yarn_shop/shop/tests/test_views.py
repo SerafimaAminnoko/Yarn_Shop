@@ -17,14 +17,14 @@ class ViewsTestCase(TestCase):
         response = self.client.get(self.product_list_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'shop/main.html')
+        self.assertTemplateUsed(response, 'shop/yarn_list.html')
 
     def test_view_category_product_list(self):
 
         response = self.client.get(self.category_product_list_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'shop/category_product_list.html')
+        self.assertTemplateUsed(response, 'shop/category_yarn_list.html')
 
 
 

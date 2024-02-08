@@ -22,20 +22,18 @@
                 <input type="text" placeholder="Search" name="query">
                 <button type="submit"><img src="{% static 'shop/images/search.png' %}"></button>
             </form>
-            <div class="blog">
-                <a href="#">Blog</a>
-            </div>
-            <div class="about">
-                <a href="#">About</a>
-            </div>
-            <div class="contacts">
-                <a href="#">Contacts</a>
-            </div>
+
+            {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
             <div class="cart-icon">
-                <a href="#">
-                    <img src="{% static 'shop/images/cart.png' %}" alt="cart-icon">
-                </a>
+                <a href="{% url 'cart_detail' %}"><img src="{% static 'shop/images/cart.png' %}" alt="cart-icon"></a>
             </div>
+            <li class="categories-list_item">{{ total_items }}PC, ${{ cart.get_total_price }}</li>
+            {% else %}
+            <li class="categories-list_item">Your cart is empty</li>
+            {% endif %}
+            {% endwith %}
+
         </div>
         <div class="header_mobile_container">
             <div class="header_mobile">

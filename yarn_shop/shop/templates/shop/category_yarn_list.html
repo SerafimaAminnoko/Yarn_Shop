@@ -9,18 +9,23 @@
                                 <option>32</option>
                                 <option>64</option>
                     </select>
-        <button type="submit">Press</button>
+        <button class="product_buy-button" type="submit">Press</button>
     </form>
 </div>
 <div class="store_products-list">
-
-                        <h4 class="store_item_title">{{ subcategory_object.name }}</h4>
+                    {% for s in subcategory_list %}
+                    <a href="{{ s.get_absolute_url }}" class="store_products-list_item">
+                        <h4 class="store_item_title">{{ s.name }}</h4>
                         <div class="store_item_image">
-                            <img src="{{ subcategory_object.image.url }}" alt="image" width="300">
+                            <img src="{{ s.image.url }}" alt="image" width="300">
                         </div>
-                    <div class="store_item_description">{{ subcategory_object.description }}</div>
+                    </a>
+                    {% endfor %}
 
-                    {% include 'shop/include/products.html' %}
+                </div>
+<div class="store_products-list">
+                {% include 'shop/include/yarn.html' %}
+
                 </div>
     {% endblock %}
 
