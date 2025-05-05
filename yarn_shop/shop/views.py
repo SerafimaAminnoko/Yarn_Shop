@@ -1,6 +1,6 @@
 # Create your views here.
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+
 from django.views.generic import ListView, DetailView
 
 from cart.forms import CartAddYarnForm

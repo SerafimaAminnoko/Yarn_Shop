@@ -1,0 +1,51 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+*.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Environment variables
+.env
+*.env
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.Python
+
+# PyCharm project files
+.idea/
+*.iml
+
+# VS Code (in case it's used too)
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Migrations (optional – comment out if you want them in version control)
+# **/migrations/
+
+# pip tools lock file (optional)
+pip-log.txt
+pip-delete-this-directory.txt
